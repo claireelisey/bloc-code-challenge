@@ -1,0 +1,11 @@
+{
+  "name": "code-challenge",
+  "version": "1.0.0",
+  "description": "A Facebook-like application for users to converse and share content",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "export NODE_ENV=test && jasmine"
+  },
+  "author": "Claire",
+  "license": "ISC"
+}
