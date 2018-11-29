@@ -2,10 +2,14 @@ const express = require("express");
 const router = express.Router();
 const postController = require("../controllers/postController");
 const validation = require("./validation");
+const helper = require("../auth/helpers");
 
 router.get("/posts", postController.index);
 router.get("/posts/new", postController.new);
-router.post("/posts/create", validation.validatePosts, postController.create);
+router.post("/posts/create",
+   helper.ensureAuthenticated,
+   validation.validatePosts,
+   postController.create);
 router.get("/posts/:id", postController.show);
 router.post("/posts/:id/destroy", postController.destroy);
 router.get("/posts/:id/edit", postController.edit);

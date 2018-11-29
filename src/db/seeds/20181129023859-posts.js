@@ -7,6 +7,7 @@ let posts = [];
 for(let i = 1 ; i <= 15 ; i++){
     posts.push({
         body: faker.hacker.phrase(),
+        userId: 0,
         createdAt: new Date(),
         updatedAt: new Date()
     });

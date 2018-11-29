@@ -1,4 +1,5 @@
 const postQueries = require("../db/queries.posts.js");
+const Authorizer = require("../policies/post");
 
 module.exports = {
 
@@ -15,20 +16,38 @@ module.exports = {
     },
 
     new(req, res, next){
-        res.render("posts/new");
+
+        const authorized = new Authorizer(req.user).new();
+
+        if(authorized) {
+            res.render("posts/new", {topicId: req.params.topicId});
+        } else {
+            req.flash("notice", "You are not authorized to do that.");
+            res.redirect("/posts/");
+        }
     },
 
     create(req, res, next){
-        let newPost = {
-            body: req.body.body
-        };
-        postQueries.addPost(newPost, (err, post) => {
-            if(err){
-                res.redirect(500, "/posts/new");
-            } else {
-                res.redirect(303, `/posts/${post.id}`);
-            }
-        });
+
+        const authorized = new Authorizer(req.user).create();
+
+        if(authorized){
+            let newPost = {
+                body: req.body.body,
+                userId: req.user.id
+            };
+            postQueries.addPost(newPost, (err, post) => {
+                if(err){
+                    console.log(err);
+                    res.redirect(500, "/posts/new");
+                } else {
+                    res.redirect(303, `/posts/${post.id}`);
+                }
+            });
+        } else {
+            req.flash("notice", "You are not authorized to do that.");
+            res.redirect("/posts");
+        }
     },
 
     show(req, res, next){
@@ -56,7 +75,15 @@ module.exports = {
             if(err || post == null){
                 res.redirect(404, "/");
             } else {
-                res.render("posts/edit", {post});
+                
+                const authorized = new Authorizer(req.user, post).edit();
+
+                if(authorized){
+                    res.render("posts/edit", {post});
+                } else {
+                    req.flash("You are not allowed to do that.");
+                    res.redirect(`/posts/${req.params.id}`);
+                }        
             }
         });
     },

@@ -12,13 +12,29 @@
 
             <% include ../static/partials/messages.ejs %>
 
+            <% if(currentUser) { %>
+                <a href="/posts/<%= post.id %>/edit" class="btn btn-warning">Edit</a>
+                <form style="display:initial" action="/posts/<%= post.id %>/destroy" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            <% } %>
+
             <h5><%= post.body %></h5>
 
-            <a href="/posts/<%= post.id %>/edit" class="btn btn-warning">Edit</a>
+            <section id="comment-form">
 
-            <form style="display:initial" action="/posts/<%= post.id %>/destroy" method="post">
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
+                <% if(currentUser) { %>
+                    <% include ../comments/new.ejs %>
+                <% } %>
+                </section>
+            
+                <section id="comment-list">
+                <% if(post.comments) { %>
+                    <% post.comments.forEach((comment) => { %>
+                        <%- include("../comments/show.ejs", {comment}) %>
+                    <% }) %>
+                <% } %>
+            </section>
 
         </main>
 
