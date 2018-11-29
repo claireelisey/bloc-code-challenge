@@ -10,6 +10,8 @@
 
         <main class="container">
 
+            <% include ../static/partials/messages.ejs %>
+
             <h5><%= post.body %></h5>
 
             <a href="/posts/<%= post.id %>/edit" class="btn btn-warning">Edit</a>

@@ -6,23 +6,25 @@
     </head>
 
     <body>
-
-        <main class="container">
         <% include ../static/partials/navbar.ejs %>
 
-        <h1>Community Wall</h1>
+        <main class="container">
 
-        <p>A community wall to share information and strike up conversation.</p>
+            <% include ../static/partials/messages.ejs %>
 
-        <a href="/posts/new" class="btn btn-success">Write A Post</a>
+            <h1>Community Wall</h1>
 
-        <ul class="list-group">
-            <% posts.forEach((post) => { %>
-                <li class="list-group-item">
-                    <a href="/posts/<%= post.id %>"> <%= post.body %> </a>
-                </li>
-            <% }) %>
-        </ul>
+            <p>A community wall to share information and strike up conversation.</p>
+
+            <a href="/posts/new" class="btn btn-success">Write A Post</a>
+
+            <ul class="list-group">
+                <% posts.forEach((post) => { %>
+                    <li class="list-group-item">
+                        <a href="/posts/<%= post.id %>"> <%= post.body %> </a>
+                    </li>
+                <% }) %>
+            </ul>
 
         </main>
 
