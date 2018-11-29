@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+    <% include ../static/partials/head.ejs %>
+    </head>
+
+    <body>
+        <% include ../static/partials/navbar.ejs %>
+
+        <main class="container">
+
+            <h1>Edit Post</h1>
+
+            <form action="/posts/<%= post.id %>/update" method="post">
+                <div class="form-group">
+                    <label for="body">Body</label>
+                    <textarea rows="4" class="form-control" name="body" placeholder="Write your post here..."><%= post.body %></textarea>
+                    <small class="text-muted" id="bodyHelp">body must be less than 300 characters in length.</small>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </main>
+
+        <% include ../static/partials/baseScripts.ejs %>
+
+    </body>
+</html>

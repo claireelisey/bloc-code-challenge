@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <% include ../static/partials/head.ejs %>
+    </head>
+
+    <body>
+        <% include ../static/partials/navbar.ejs %>
+
+        <main class="container">
+
+            <h5><%= post.body %></h5>
+
+            <a href="/posts/<%= post.id %>/edit" class="btn btn-warning">Edit</a>
+
+            <form style="display:initial" action="/posts/<%= post.id %>/destroy" method="post">
+                <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+
+        </main>
+
+        <% include ../static/partials/baseScripts.ejs %>
+
+    </body>
+
+</html>
